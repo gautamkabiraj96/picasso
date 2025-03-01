@@ -79,13 +79,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'picasso',
-        'USER': 'gautamkabiraj',
-        'PASSWORD': 'P1C@44O',
+        # 'USER': 'gautamkabiraj',
+        'USER': 'postgres',
+        'PASSWORD': 'G@u+@m123',
         'HOST': 'localhost',
         'PORT': '5432', 
     }
 }
-
 
 
 # Password validation
