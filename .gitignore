@@ -8,3 +8,8 @@ db.sqlite3
 *.log
 .vscode/
 .DS_Store
+.Include/
+.Lib/
+.Scripts/
+picaso_api/__pycache__/
+picaso_api/migrations/
