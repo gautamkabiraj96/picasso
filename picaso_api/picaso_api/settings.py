@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'api',
+    'tasks',
 ]
 
 MIDDLEWARE = [
@@ -77,10 +77,15 @@ WSGI_APPLICATION = 'picaso_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'picasso',
+        'USER': 'gautamkabiraj',
+        'PASSWORD': 'P1C@44O',
+        'HOST': 'localhost',
+        'PORT': '5432', 
     }
 }
+
 
 
 # Password validation
