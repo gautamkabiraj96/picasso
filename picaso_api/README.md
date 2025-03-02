@@ -5,7 +5,11 @@ python3 manage.py runserver
 
 ## Activate venv
 
+### Mac:
 source ../venv/bin/activate
+
+### Windows:
+.\Scripts\activate
 
 ## Run migrations
 
