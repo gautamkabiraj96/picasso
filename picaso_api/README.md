@@ -12,7 +12,7 @@ Password for user <dbuser>:
  ## Mac:
 brew services start postgresql
 
-# App
+# API
 
 ## Deps
 
