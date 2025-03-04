@@ -1,3 +1,4 @@
+#virtual env
 venv/
 __pycache__/
 db.sqlite3
@@ -14,8 +15,11 @@ Lib/
 Scripts/
 pyvenv.cfg
 
+#api ignore
 picaso_api/__pycache__/
 picaso_api/migrations/
 
+#web ignore
 picaso_web/node_modules/
 picaso_web/build/
+picaso_web/.next/
