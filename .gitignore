@@ -16,3 +16,6 @@ pyvenv.cfg
 
 picaso_api/__pycache__/
 picaso_api/migrations/
+
+picaso_web/node_modules/
+picaso_web/build/
