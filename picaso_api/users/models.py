@@ -25,6 +25,8 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     # User's email address, used as username
     email = models.EmailField(unique=True)
+    google_id = models.CharField(max_length=100, blank=True, null=True)
+    is_verified = models.BooleanField(default=False)
     # User's first and last names
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
     'rest_framework',
     'tasks',
     'users',
@@ -81,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'picasso',
         # 'USER': 'gautamkabiraj',
-        'USER': 'postgres',
+        'USER': 'tsemi',
         # 'PASSWORD': 'P1C@$$O',
         'PASSWORD': 'G@u+@m123',
         'HOST': 'localhost',
@@ -142,8 +143,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # }
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
+
     ],
 }
