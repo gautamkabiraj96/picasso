@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -22,29 +22,22 @@ class UserManager(BaseUserManager):
         # Create and return a superuser using the same logic as create_user
         return self.create_user(email, password, **extra_fields)
 
-class User(AbstractBaseUser):
-    # User's email address, used as username
-    email = models.EmailField(unique=True)
-    google_id = models.CharField(max_length=100, blank=True, null=True)
+class User(AbstractUser):
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        default="default_user"  # Generates a unique default username
+    )
+    # Add custom fields here
+    profile_picture = models.URLField(max_length=255, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
-    # User's first and last names
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    # Boolean fields to track user's active status and staff status
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    # Timestamps for when the user object was created and last updated
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    # UserManager instance to handle user creation and authentication
-    objects = UserManager()
-
-    # Custom User model specifies the email as the unique identifier
+    
+    # Make email the USERNAME_FIELD
     USERNAME_FIELD = 'email'
+    email = models.EmailField(unique=True)
+    
     # List of required fields that need to be provided upon user creation
-    REQUIRED_FIELDS = ['first_name', 'last_name']
-
+    REQUIRED_FIELDS = ['username']
+    
     def __str__(self):
-        # String representation of the User model, returning the user's email
         return self.email

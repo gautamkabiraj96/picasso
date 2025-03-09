@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,13 +38,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework.authtoken',
+    'django.contrib.sites', # Required for django-allauth
+
     'rest_framework',
+    'rest_framework.authtoken', # Required for token auth
+    'rest_framework_simplejwt', # If using JWT
+    'corsheaders', # For CORS support
+    'allauth',
+    'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',  # Google provider
+    'dj_rest_auth',
+    # 'dj_rest_auth.registration',
     'tasks',
     'users',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'picaso_api.urls'
@@ -142,12 +155,48 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     ],
 # }
 
+# Authentication backends
+AUTHENTICATION_BACKENDS = [ 
+    'django.contrib.auth.backends.ModelBackend',
+    # 'allauth.account.auth_backends.AuthenticationBackend'
+]
+
+# REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
 
     ],
 }
+
+# django-allauth settings
+ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Change to 'mandatory' to require email verification
+ACCOUNT_LOGIN_METHODS = {'email'}  # Use email for authentication
+ACCOUNT_EMAIL_REQUIRED = True  # Email is required
+ACCOUNT_UNIQUE_EMAIL = True  # Email must be unique
+ACCOUNT_USERNAME_REQUIRED = False  # Username is not required
+
+# JWT settings (if using JWT)
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+}
+
+# dj-rest-auth settings
+REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": "_auth",  # Name of access token cookie
+    "JWT_AUTH_REFRESH_COOKIE": "refresh-token", # Name of refresh token cookie
+    "JWT_AUTH_HTTPONLY": False,  # Makes sure refresh token is sent
+}
+
+# CORS settings
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Your Next.js development server
+]
