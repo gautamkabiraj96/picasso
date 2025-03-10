@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
+from dotenv import load_dotenv
 from pathlib import Path
 from datetime import timedelta
 
@@ -47,8 +48,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.google',  # Google provider
-    'dj_rest_auth',
+    'allauth.socialaccount.providers.google',  # Google provider
+    # 'dj_rest_auth',
     'dj_rest_auth.registration',
     'tasks',
     'users',
@@ -174,12 +175,13 @@ REST_FRAMEWORK = {
 }
 
 # django-allauth settings
-ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Change to 'mandatory' to require email verification
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Change to 'mandatory' to require email verification
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGIN_METHODS = {'email'}  # Use email for authentication
 ACCOUNT_EMAIL_REQUIRED = True  # Email is required
 ACCOUNT_UNIQUE_EMAIL = True  # Email must be unique
 ACCOUNT_USERNAME_REQUIRED = False  # Username is not required
-ACCOUNT_LOGIN_METHODS = {'email'}
+LOGIN_URL = '/'
 
 # JWT settings (if using JWT)
 SIMPLE_JWT = {
@@ -210,3 +212,29 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "habitsofpicasso@gmail.com"  # Your Gmail address
 EMAIL_HOST_PASSWORD = "qpdu ymoi anru zhaa"  # App password from Google
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Default sender email
+
+# Google OAuth
+GOOGLE_OAUTH_CLIENT_ID = os.getenv('GOOGLE_OAUTH_CLIENT_ID')
+GOOGLE_OAUTH_CLIENT_SECRET = os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')
+GOOGLE_OAUTH_CALLBACK_URL = os.getenv('GOOGLE_OAUTH_CALLBACK_URL')
+
+# django-allauth (social)
+# Authenticate if local account with this email address already exists
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+# Connect local account and social account if local account with that email address already exists
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APPS": [
+            {
+                "client_id": GOOGLE_OAUTH_CLIENT_ID,
+                "secret": GOOGLE_OAUTH_CLIENT_SECRET,
+                "key": "",
+            },
+        ],
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
