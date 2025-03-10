@@ -2,9 +2,11 @@ from django.contrib.auth import get_user_model, authenticate
 from .serializers import UserSerializer
 from rest_framework.response import Response
 from rest_framework import status, generics
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken
+from .models import AccessTokenBlacklist 
 
 User = get_user_model()
 
@@ -54,12 +56,17 @@ class LogoutView(APIView):
     def post(self, request):
         try:
             refresh_token = request.data.get("refreshToken")
-            if refresh_token is None:
-                return Response({"error": "Refresh token is required"}, status=status.HTTP_400_BAD_REQUEST)
+            access_token = request.headers.get("Authorization").split(" ")[1]
             
-            token = RefreshToken(refresh_token)
-            token.blacklist()
+            if not refresh_token or not access_token:
+                return Response({"error": "Both access and refresh token are required!"}, status=status.HTTP_400_BAD_REQUEST)
             
+            refresh = RefreshToken(refresh_token)
+            refresh.blacklist()
+            
+            AccessTokenBlacklist.objects.create(token=access_token)
+
             return Response({"message": "User logged out successfully"}, status=status.HTTP_200_OK)
+        
         except Exception as e:
             return Response({"error": "Invalid refresh token or already blacklisted!"}, status=status.HTTP_400_BAD_REQUEST)

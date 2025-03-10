@@ -46,3 +46,10 @@ class User(AbstractBaseUser):
     def __str__(self):
         # String representation of the User model, returning the user's email
         return self.email
+
+class AccessTokenBlacklist(models.Model):
+    token = models.CharField(max_length=500, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.token
