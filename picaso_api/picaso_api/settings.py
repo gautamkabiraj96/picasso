@@ -46,10 +46,10 @@ INSTALLED_APPS = [
     'corsheaders', # For CORS support
     'allauth',
     'allauth.account',
-    # 'allauth.socialaccount',
+    'allauth.socialaccount',
     # 'allauth.socialaccount.providers.google',  # Google provider
     'dj_rest_auth',
-    # 'dj_rest_auth.registration',
+    'dj_rest_auth.registration',
     'tasks',
     'users',
 ]
@@ -179,6 +179,7 @@ ACCOUNT_LOGIN_METHODS = {'email'}  # Use email for authentication
 ACCOUNT_EMAIL_REQUIRED = True  # Email is required
 ACCOUNT_UNIQUE_EMAIL = True  # Email must be unique
 ACCOUNT_USERNAME_REQUIRED = False  # Username is not required
+ACCOUNT_LOGIN_METHODS = {'email'}
 
 # JWT settings (if using JWT)
 SIMPLE_JWT = {
@@ -200,3 +201,12 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Your Next.js development server
 ]
+
+# Gmail SMTP settings
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "habitsofpicasso@gmail.com"  # Your Gmail address
+EMAIL_HOST_PASSWORD = "qpdu ymoi anru zhaa"  # App password from Google
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Default sender email
