@@ -11,6 +11,6 @@ urlpatterns = [
     path('api/auth/', include('dj_rest_auth.urls')),
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     # path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    # path('tasks/', include('tasks.urls')),
-    # path('users/', include('users.urls')),
+    path('tasks/', include('tasks.urls')),
+    path('users/', include('users.urls')),
 ]
