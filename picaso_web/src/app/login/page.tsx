@@ -29,7 +29,7 @@ export default function Login() {
       setLoading(true);
       
       // Replace with your actual API endpoint
-      const response = await fetch(`${BASE_API_URL}/api/auth/login/`, {
+      const response = await fetch(`${BASE_API_URL}/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
