@@ -2,10 +2,11 @@
 
 'use client'
 
-import { FormEventHandler, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Head from 'next/head';
+import { BASE_API_URL } from '@/utils/constants';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -28,7 +29,7 @@ export default function Login() {
       setLoading(true);
       
       // Replace with your actual API endpoint
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(`${BASE_API_URL}/api/auth/login/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
