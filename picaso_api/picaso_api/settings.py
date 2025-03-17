@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'users.middleware.JWTBlacklistMiddleware',
+    'users.middleware.TokenUserMiddleware'
 ]
 
 ROOT_URLCONF = 'picaso_api.urls'
@@ -87,7 +88,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'picasso',
         # 'USER': 'gautamkabiraj',
-        'USER': 'postgres',
+        'USER': 'tsemi',
         # 'PASSWORD': 'P1C@$$O',
         'PASSWORD': 'G@u+@m123',
         'HOST': 'localhost',
