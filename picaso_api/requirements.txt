@@ -3,3 +3,4 @@ djangorestframework
 djangorestframework_simplejwt
 psycopg 
 drf_yasg
+django-cors-headers
