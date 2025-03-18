@@ -43,6 +43,3 @@ source ../venv/bin/activate
 
 python manage.py makemigrations
 python manage.py migrate
-
-## Logger (django's)
-https://docs.djangoproject.com/en/5.1/howto/logging/#:~:text=There%20are%20various%20ways%20of,are%20merged%20with%20Django's%20defaults.
