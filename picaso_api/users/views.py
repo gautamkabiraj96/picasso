@@ -7,7 +7,9 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken
 from .models import AccessTokenBlacklist 
+import logging
 
+logger = logging.getLogger("django")
 User = get_user_model()
 
 class SignupView(generics.CreateAPIView):
@@ -31,6 +33,7 @@ class LoginView(APIView):
                 "refreshToken": str(refresh),
             })
         
+        logger.error("Invalid Credentials")
         return Response({"error": "Invalid Credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
 class TokenRefreshView(APIView):
