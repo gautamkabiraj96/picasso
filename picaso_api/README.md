@@ -1,3 +1,18 @@
+# Picaso API
+
+## Features
+
+- Create, update, delete tasks
+- Tasks have statuses: `New`, `In-progress`, and `Done`
+- User authentication and management
+- RESTful API using Django REST Framework
+
+## Tech Stack
+
+- **Backend**: Django, Django REST Framework
+- **Database**: PostgreSQL
+- **Authentication**: REST Framework Simple JWT
+
 # Database
 
 ## Windows:
